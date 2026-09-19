@@ -41,6 +41,22 @@ export default function Inicio() {
       </View>
 
       <View style={styles.cartao}>
+        <Text style={styles.cartaoTitulo}>Carinha</Text>
+        <Text style={styles.detalhe}>Qualquer coisa.</Text>
+        <Link href="/carinha" style={styles.link}>
+          Abrir carinhas →
+        </Link>
+      </View>
+
+      <View style={styles.cartao}>
+        <Text style={styles.cartaoTitulo}>Lista</Text>
+        <Text style={styles.detalhe}>Qualquer coisa.</Text>
+        <Link href="/lista" style={styles.link}>
+          Abrir lista →
+        </Link>
+      </View>
+
+      <View style={styles.cartao}>
         <Text style={styles.cartaoTitulo}>Rota que não existe</Text>
         <Text style={styles.detalhe}>
           Não existe arquivo chamado boletim.js. Toque para ver o que o Expo

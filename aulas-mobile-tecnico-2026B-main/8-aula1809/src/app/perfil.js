@@ -5,7 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Perfil() {
   // O texto digitado é estado: muda com o tempo e aparece na tela.
-  const [nome, setNome] = useState("");
+  const [nome, setNome] = useState("Cavalo");
 
   // Lista vazia []: o efeito roda uma vez, quando a tela abre.
   // A função devolvida no return é a limpeza: o React chama quando a tela
@@ -44,9 +44,7 @@ export default function Perfil() {
       {/* Lê o MESMO estado. A cada tecla a tela é desenhada de novo e a
           saudação acompanha. Ternário: enquanto o campo está vazio, mostra
           "Estudante". */}
-      <Text style={styles.saudacao}>
-        Olá, {nome !== "" ? nome : "Estudante"}
-      </Text>
+      <Text style={styles.saudacao}>Olá, {nome}</Text>
 
       <Text style={styles.aviso}>
         Este nome vive só nesta tela: volte para a home e o cabeçalho continua
