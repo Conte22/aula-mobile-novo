@@ -2,68 +2,44 @@ import { Link, Stack } from "expo-router";
 import { StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-// Este arquivo é a rota "/" — a tela que abre primeiro.
-// O nome index é o único com significado especial: index.js de uma pasta é a
-// tela daquela pasta.
 export default function Inicio() {
   return (
-    // edges={["bottom"]}: o cabeçalho já resolveu o topo, sobra a barra de
-    // gestos embaixo. Com "bottom" na lista, o topo fica de fora — a
-    // SafeAreaView NÃO põe nada lá. O paddingTop do estilo é espaçamento
-    // nosso, não área segura: tire e o avatar cola no cabeçalho.
+    // Área segura da tela
     <SafeAreaView style={styles.tela} edges={["bottom"]}>
-      {/* Cada tela pode mexer no próprio cabeçalho */}
-      <Stack.Screen options={{ title: "Qualquer outra coisa" }} />
+      
+      {/* Título do cabeçalho */}
+      <Stack.Screen options={{ title: "Início" }} />
 
-      <View style={styles.cabecalho}>
-        <View style={styles.avatar} />
-        <View>
-          <Text style={styles.saudacao}>Olá, Estudante</Text>
-          <Text style={styles.subtitulo}>Bem-vindo de volta</Text>
-        </View>
-      </View>
+      {/* Título principal */}
+      <Text style={styles.titulo}>Sistema Acadêmico</Text>
 
+      {/* Card de Notas */}
       <View style={styles.cartao}>
         <Text style={styles.cartaoTitulo}>Notas</Text>
-        <Text style={styles.detalhe}>Três disciplinas com nota lançada.</Text>
-        {/* href é o caminho do arquivo: notas.js vira "/notas" */}
+
+        {/* Vai para a tela notas.js */}
         <Link href="/notas" style={styles.link}>
-          Ver minhas notas →
+          Abrir →
         </Link>
       </View>
 
+      {/* Card de Perfil */}
       <View style={styles.cartao}>
         <Text style={styles.cartaoTitulo}>Perfil</Text>
-        <Text style={styles.detalhe}>Seus dados de matrícula.</Text>
+
+        {/* Vai para a tela perfil.js */}
         <Link href="/perfil" style={styles.link}>
-          Abrir perfil →
+          Abrir →
         </Link>
       </View>
 
-      <View style={styles.cartao}>
-        <Text style={styles.cartaoTitulo}>Carinha</Text>
-        <Text style={styles.detalhe}>Qualquer coisa.</Text>
-        <Link href="/carinha" style={styles.link}>
-          Abrir carinhas →
-        </Link>
-      </View>
-
+      {/* Card de Lista */}
       <View style={styles.cartao}>
         <Text style={styles.cartaoTitulo}>Lista</Text>
-        <Text style={styles.detalhe}>Qualquer coisa.</Text>
-        <Link href="/lista" style={styles.link}>
-          Abrir lista →
-        </Link>
-      </View>
 
-      <View style={styles.cartao}>
-        <Text style={styles.cartaoTitulo}>Rota que não existe</Text>
-        <Text style={styles.detalhe}>
-          Não existe arquivo chamado boletim.js. Toque para ver o que o Expo
-          Router faz quando a rota não existe.
-        </Text>
-        <Link href="/boletim" style={styles.link}>
-          Tentar abrir /boletim →
+        {/* Vai para a tela lista.js */}
+        <Link href="/lista" style={styles.link}>
+          Abrir →
         </Link>
       </View>
     </SafeAreaView>
@@ -71,62 +47,37 @@ export default function Inicio() {
 }
 
 const styles = StyleSheet.create({
+  // Tela principal
   tela: {
     flex: 1,
-    backgroundColor: "#FFFFFF",
-    paddingHorizontal: 16,
-    paddingTop: 16,
+    padding: 16,
+    backgroundColor: "#fff",
   },
 
-  cabecalho: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 14,
+  // Título da página
+  titulo: {
+    fontSize: 24,
+    fontWeight: "bold",
     marginBottom: 20,
   },
 
-  avatar: {
-    width: 56,
-    height: 56,
-    borderRadius: 28,
-    backgroundColor: "#D9DDE3",
-  },
-
-  saudacao: {
-    fontSize: 22,
-    fontWeight: "bold",
-    color: "#111827",
-  },
-
-  subtitulo: {
-    fontSize: 14,
-    color: "#6B7280",
-    marginTop: 2,
-  },
-
+  // Caixa de conteúdo
   cartao: {
-    backgroundColor: "#F1F3F6",
-    borderRadius: 12,
+    backgroundColor: "#f0f0f0",
     padding: 16,
-    marginBottom: 12,
-    gap: 6,
+    borderRadius: 10,
+    marginBottom: 10,
   },
 
+  // Título do cartão
   cartaoTitulo: {
-    fontSize: 16,
-    fontWeight: "600",
-    color: "#111827",
+    fontSize: 18,
+    marginBottom: 5,
   },
 
-  detalhe: {
-    fontSize: 14,
-    color: "#374151",
-  },
-
+  // Link de navegação
   link: {
-    fontSize: 15,
-    fontWeight: "600",
-    color: "#2354D6",
-    marginTop: 4,
+    color: "blue",
+    fontWeight: "bold",
   },
 });
