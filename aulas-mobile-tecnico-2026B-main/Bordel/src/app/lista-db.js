@@ -4,27 +4,25 @@ import { Button, FlatList, StyleSheet, Text, TextInput } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as SQLite from "expo-sqlite";
 
-// Fora do componente: o banco abre uma vez. O arquivo fica no aparelho —
-// fechar o app não apaga. A tela /lista continua só na memória.
-const db = SQLite.openDatabaseSync("tarefas.db");
+const db = SQLite.openDatabaseSync("bordeis.db");
 
 db.execSync(`
-  CREATE TABLE IF NOT EXISTS tarefas (
+  CREATE TABLE IF NOT EXISTS bordeis (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    texto TEXT NOT NULL
+    nome TEXT NOT NULL
   );
 `);
 
 function listar() {
-  return db.getAllSync("SELECT * FROM tarefas ORDER BY id DESC");
+  return db.getAllSync("SELECT * FROM bordeis ORDER BY id DESC");
 }
 
-function adicionar(texto) {
-  db.runSync("INSERT INTO tarefas (texto) VALUES (?)", [texto]);
+function adicionar(nome) {
+  db.runSync("INSERT INTO bordeis (nome) VALUES (?)", [nome]);
 }
 
-export default function ListaDb() {
-  const [texto, setTexto] = useState("");
+export default function Bordel() {
+  const [nome, setNome] = useState("");
   const [lista, setLista] = useState([]);
 
   function carregar() {
@@ -36,28 +34,37 @@ export default function ListaDb() {
   }, []);
 
   function salvar() {
-    adicionar(texto);
-    setTexto("");
+    if (nome.trim() === "") {
+      return;
+    }
+
+    adicionar(nome);
+    setNome("");
     carregar();
   }
 
   return (
     <SafeAreaView style={styles.tela} edges={["bottom"]}>
-      <Stack.Screen options={{ title: "Tarefas no banco" }} />
+      <Stack.Screen options={{ title: "Cadastro de Bordéis" }} />
 
       <TextInput
         style={styles.campo}
-        value={texto}
-        onChangeText={setTexto}
-        placeholder="Nova tarefa"
+        value={nome}
+        onChangeText={setNome}
+        placeholder="Nome do bordel"
       />
-      <Button title="Adicionar" onPress={salvar} />
+
+      <Button title="Salvar" onPress={salvar} />
 
       <FlatList
         style={styles.lista}
         data={lista}
         keyExtractor={(item) => String(item.id)}
-        renderItem={({ item }) => <Text style={styles.item}>{item.texto}</Text>}
+        renderItem={({ item }) => (
+          <Text style={styles.item}>
+            {item.nome}
+          </Text>
+        )}
       />
     </SafeAreaView>
   );
@@ -77,7 +84,6 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 12,
     fontSize: 16,
-    color: "#111827",
     marginBottom: 12,
   },
 
@@ -92,6 +98,5 @@ const styles = StyleSheet.create({
     padding: 16,
     marginBottom: 8,
     fontSize: 15,
-    color: "#111827",
   },
 });

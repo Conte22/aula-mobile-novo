@@ -2,76 +2,44 @@ import { Link, Stack } from "expo-router";
 import { StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-// Este arquivo é a rota "/" — a tela que abre primeiro.
-// O nome index é o único com significado especial: index.js de uma pasta é a
-// tela daquela pasta.
 export default function Inicio() {
   return (
-    // edges={["bottom"]}: o cabeçalho já resolveu o topo, sobra a barra de
-    // gestos embaixo. Com "bottom" na lista, o topo fica de fora — a
-    // SafeAreaView NÃO põe nada lá. O paddingTop do estilo é espaçamento
-    // nosso, não área segura: tire e o avatar cola no cabeçalho.
     <SafeAreaView style={styles.tela} edges={["bottom"]}>
-      {/* Cada tela pode mexer no próprio cabeçalho */}
-      <Stack.Screen options={{ title: "Qualquer outra coisa" }} />
-
-      <View style={styles.cabecalho}>
-        <View style={styles.avatar} />
-        <View>
-          <Text style={styles.saudacao}>Olá, Estudante</Text>
-          <Text style={styles.subtitulo}>Bem-vindo de volta</Text>
-        </View>
-      </View>
+      <Stack.Screen options={{ title: "Menu Principal" }} />
 
       <View style={styles.cartao}>
         <Text style={styles.cartaoTitulo}>Notas</Text>
-        <Text style={styles.detalhe}>Três disciplinas com nota lançada.</Text>
-        {/* href é o caminho do arquivo: notas.js vira "/notas" */}
-        <Link href="/notas" style={styles.link}>
-          Ver minhas notas →
-        </Link>
-      </View>
 
-      <View style={styles.cartao}>
-        <Text style={styles.cartaoTitulo}>Perfil</Text>
-        <Text style={styles.detalhe}>Seus dados de matrícula.</Text>
-        <Link href="/perfil" style={styles.link}>
-          Abrir perfil →
-        </Link>
-      </View>
-
-      <View style={styles.cartao}>
-        <Text style={styles.cartaoTitulo}>Carinha</Text>
-        <Text style={styles.detalhe}>Qualquer coisa.</Text>
-        <Link href="/carinha" style={styles.link}>
-          Abrir carinhas →
-        </Link>
-      </View>
-
-      <View style={styles.cartao}>
-        <Text style={styles.cartaoTitulo}>Lista</Text>
-        <Text style={styles.detalhe}>Qualquer coisa.</Text>
-        <Link href="/lista" style={styles.link}>
-          Abrir lista →
-        </Link>
-      </View>
-
-      <View style={styles.cartao}>
-        <Text style={styles.cartaoTitulo}>Lista no banco</Text>
-        <Text style={styles.detalhe}>Tarefas que ficam no aparelho.</Text>
-        <Link href="/lista-db" style={styles.link}>
-          Abrir lista no banco →
-        </Link>
-      </View>
-
-      <View style={styles.cartao}>
-        <Text style={styles.cartaoTitulo}>Rota que não existe</Text>
         <Text style={styles.detalhe}>
-          Não existe arquivo chamado boletim.js. Toque para ver o que o Expo
-          Router faz quando a rota não existe.
+          Exemplo de tela de notas.
         </Text>
-        <Link href="/boletim" style={styles.link}>
-          Tentar abrir /boletim →
+
+        <Link href="/notas" style={styles.link}>
+          Abrir notas →
+        </Link>
+      </View>
+
+      <View style={styles.cartao}>
+        <Text style={styles.cartaoTitulo}>Cadastro de Bordel</Text>
+
+        <Text style={styles.detalhe}>
+          Informar o nome e salvar no SQLite.
+        </Text>
+
+        <Link href="/bordel" style={styles.link}>
+          Abrir cadastro →
+        </Link>
+      </View>
+
+      <View style={styles.cartao}>
+        <Text style={styles.cartaoTitulo}>Banco de Dados</Text>
+
+        <Text style={styles.detalhe}>
+          Exemplo utilizando SQLite.
+        </Text>
+
+        <Link href="/lista-db" style={styles.link}>
+          Abrir banco →
         </Link>
       </View>
     </SafeAreaView>
@@ -86,38 +54,11 @@ const styles = StyleSheet.create({
     paddingTop: 16,
   },
 
-  cabecalho: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 14,
-    marginBottom: 20,
-  },
-
-  avatar: {
-    width: 56,
-    height: 56,
-    borderRadius: 28,
-    backgroundColor: "#D9DDE3",
-  },
-
-  saudacao: {
-    fontSize: 22,
-    fontWeight: "bold",
-    color: "#111827",
-  },
-
-  subtitulo: {
-    fontSize: 14,
-    color: "#6B7280",
-    marginTop: 2,
-  },
-
   cartao: {
     backgroundColor: "#F1F3F6",
     borderRadius: 12,
     padding: 16,
     marginBottom: 12,
-    gap: 6,
   },
 
   cartaoTitulo: {
@@ -129,12 +70,13 @@ const styles = StyleSheet.create({
   detalhe: {
     fontSize: 14,
     color: "#374151",
+    marginTop: 4,
   },
 
   link: {
     fontSize: 15,
     fontWeight: "600",
     color: "#2354D6",
-    marginTop: 4,
+    marginTop: 8,
   },
 });
