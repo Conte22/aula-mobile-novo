@@ -160,7 +160,7 @@ export default function Jogos() {
 
             <Button
               title="Excluir"
-              color="red"
+              color="#FF0000"
               onPress={() => excluir(item.id)}
             />
           </View>
