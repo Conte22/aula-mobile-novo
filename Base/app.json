@@ -1,0 +1,12 @@
+{
+  "expo": {
+    "name": "Base",
+    "slug": "Base",
+    "scheme": "Base",
+    "plugins": [
+      "expo-router",
+      "expo-status-bar",
+      "expo-sqlite"
+    ]
+  }
+}
