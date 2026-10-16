@@ -13,7 +13,7 @@ import * as SQLite from "expo-sqlite";
 const db = SQLite.openDatabaseSync("trabalho.db");
 
 db.execSync(`
-  CREATE TABLE IF NOT EXISTS contatos (
+  CREATE TABLE IF NOT EXISTS jogos (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nome TEXT NOT NULL,
     plataforma TEXT NOT NULL,
@@ -21,7 +21,7 @@ db.execSync(`
   );
 `);
 
-export default function Contatos() {
+export default function Jogos() {
   const [nome, setNome] = useState("");
   const [plataforma, setPlataforma] = useState("");
   const [horas, setHoras] = useState("");
@@ -30,7 +30,7 @@ export default function Contatos() {
 
   function carregar() {
     const dados = db.getAllSync(
-      "SELECT * FROM contatos ORDER BY id DESC"
+      "SELECT * FROM jogos ORDER BY id DESC"
     );
 
     setLista(dados);
