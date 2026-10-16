@@ -11,7 +11,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import * as SQLite from "expo-sqlite";
 
 const db = SQLite.openDatabaseSync("trabalho.db");
-
+function criarTabela() {
 db.execSync(`
   CREATE TABLE IF NOT EXISTS jogos (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -20,7 +20,7 @@ db.execSync(`
     horas TEXT NOT NULL
   );
 `);
-
+}
 export default function Jogos() {
   const [nome, setNome] = useState("");
   const [plataforma, setPlataforma] = useState("");
@@ -91,6 +91,7 @@ export default function Jogos() {
   }
 
   useEffect(() => {
+    criarTabela();
     carregar();
   }, []);
 
@@ -147,7 +148,7 @@ export default function Jogos() {
         keyExtractor={(item) => String(item.id)}
         ListEmptyComponent={<Text>Nenhum jogo cadastrado.</Text>}
         renderItem={({ item }) => (
-          <View style={styles.contato}>
+          <View style={styles.Jogos}>
             <Text>Nome: {item.nome}</Text>
             <Text>Plataforma: {item.plataforma}</Text>
             <Text>Horas Jogadas: {item.horas}</Text>
@@ -192,7 +193,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 10,
   },
-  contato: {
+  Jogos: {
     borderWidth: 1,
     borderColor: "gray",
     padding: 10,
