@@ -1,0 +1,12 @@
+{
+  "expo": {
+    "name": "CadastroJogo",
+    "slug": "CadastroJogo",
+    "scheme": "CadastroJogo",
+    "plugins": [
+      "expo-router",
+      "expo-status-bar",
+      "expo-sqlite"
+    ]
+  }
+}
