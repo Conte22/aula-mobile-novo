@@ -1,24 +1,22 @@
-import { StatusBar } from "expo-status-bar";
+
 import { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
   View,
   Button,
-  Pressable,
   FlatList,
   TextInput,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Link, Stack } from "expo-router";
-import * as SQLite from "expo-sqlite";
+import { Stack } from "expo-router";
 
-const API_URL = "https://6ae523d428393034b08e269c.mockapi.io/produtos";
+const API_URL = "https://6aee5ed6a677fe0fc14fe378.mockapi.io/Produtos";
 
-export default function Hamburgueria() {
+export default function Cafeteria() {
   const [produtos, setProdutos] = useState([]);
   const [nomeProduto, setNomeProduto] = useState("");
-  const [valorProduto, setValorProduto] = useState(0);
+  const [valorProduto, setValorProduto] = useState("");
   const [descricaoProduto, setDescricaoProduto] = useState("");
   const [tipoProduto, setTipoProduto] = useState("");
   const [idEditando, setIdEditando] = useState(0);
@@ -30,31 +28,29 @@ export default function Hamburgueria() {
   }
 
   async function salvarProduto() {
+    const dadosProduto = {
+      nome: nomeProduto,
+      valor: Number(valorProduto),
+      descricao: descricaoProduto,
+      tipo: tipoProduto,
+    };
+
     if (idEditando === 0) {
       await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          nome: nomeProduto,
-          valor: valorProduto,
-          descricao: descricaoProduto,
-          tipo: tipoProduto,
-        }),
+        body: JSON.stringify(dadosProduto),
       });
     } else {
       await fetch(API_URL + "/" + idEditando, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          nome: nomeProduto,
-          valor: valorProduto,
-          descricao: descricaoProduto,
-          tipo: tipoProduto,
-        }),
+        body: JSON.stringify(dadosProduto),
       });
 
       setIdEditando(0);
     }
+
     setNomeProduto("");
     setDescricaoProduto("");
     setValorProduto("");
@@ -67,14 +63,15 @@ export default function Hamburgueria() {
     await fetch(`${API_URL}/${id}`, {
       method: "DELETE",
     });
+
     buscarProdutos();
   }
 
-  async function editar(item) {
+  function editar(item) {
     setIdEditando(item.id);
     setNomeProduto(item.nome);
     setDescricaoProduto(item.descricao);
-    setValorProduto(item.valor);
+    setValorProduto(String(item.valor));
     setTipoProduto(item.tipo);
   }
 
@@ -84,7 +81,9 @@ export default function Hamburgueria() {
 
   return (
     <SafeAreaView style={styles.tela} edges={["bottom"]}>
-      <Stack.Screen options={{ title: "Meus produtos" }} />
+      <Stack.Screen options={{ title: "Cafeteria" }} />
+
+      <Text style={styles.titulo}>Cadastro de produtos</Text>
 
       <TextInput
         style={styles.campo}
@@ -92,6 +91,7 @@ export default function Hamburgueria() {
         onChangeText={setNomeProduto}
         placeholder="Nome do produto"
       />
+
       <TextInput
         style={styles.campo}
         value={valorProduto}
@@ -99,12 +99,14 @@ export default function Hamburgueria() {
         keyboardType="numeric"
         placeholder="Valor do produto"
       />
+
       <TextInput
         style={styles.campo}
         value={descricaoProduto}
         onChangeText={setDescricaoProduto}
         placeholder="Descrição do produto"
       />
+
       <TextInput
         style={styles.campo}
         value={tipoProduto}
@@ -117,13 +119,18 @@ export default function Hamburgueria() {
       <FlatList
         style={styles.lista}
         data={produtos}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <View>
             <Text style={styles.item}>
-              {item.id} - {item.nome} - {item.descricao}
+              {item.id} - {item.nome}
+              {"\n"}Valor: R$ {item.valor}
+              {"\n"}Descrição: {item.descricao}
+              {"\n"}Tipo: {item.tipo}
             </Text>
-            <Button title="Excluir" onPress={() => excluir(item.id)} />
+
             <Button title="Editar" onPress={() => editar(item)} />
+            <Button title="Excluir" onPress={() => excluir(item.id)} />
           </View>
         )}
       />
@@ -137,6 +144,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     paddingHorizontal: 16,
     paddingTop: 16,
+  },
+
+  titulo: {
+    fontSize: 22,
+    fontWeight: "bold",
+    marginBottom: 16,
   },
 
   campo: {
