@@ -1,78 +1,85 @@
+import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
 import {
-  Button,
-  FlatList,
   StyleSheet,
   Text,
-  TextInput,
   View,
+  Button,
+  Pressable,
+  FlatList,
+  TextInput,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Stack } from "expo-router";
+import { Link, Stack } from "expo-router";
+import * as SQLite from "expo-sqlite";
 
-const API = "https://6ae523d428393034b08e269c.mockapi.io/produtos";
+const API_URL = "https://6ae523d428393034b08e269c.mockapi.io/produtos";
 
 export default function Hamburgueria() {
   const [produtos, setProdutos] = useState([]);
-  const [nome, setNome] = useState("");
-  const [valor, setValor] = useState("");
-  const [descricao, setDescricao] = useState("");
-  const [tipo, setTipo] = useState("");
+  const [nomeProduto, setNomeProduto] = useState("");
+  const [valorProduto, setValorProduto] = useState(0);
+  const [descricaoProduto, setDescricaoProduto] = useState("");
+  const [tipoProduto, setTipoProduto] = useState("");
   const [idEditando, setIdEditando] = useState(0);
 
-  async function buscar() {
-    const resposta = await fetch(API);
+  async function buscarProdutos() {
+    const resposta = await fetch(API_URL);
     const dados = await resposta.json();
     setProdutos(dados);
   }
 
-  async function salvar() {
-    const produto = {
-      nome: nome,
-      valor: valor,
-      descricao: descricao,
-      tipo: tipo,
-    };
-
+  async function salvarProduto() {
     if (idEditando === 0) {
-      // novo produto: POST
-      await fetch(API, {
+      await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(produto),
+        body: JSON.stringify({
+          nome: nomeProduto,
+          valor: valorProduto,
+          descricao: descricaoProduto,
+          tipo: tipoProduto,
+        }),
       });
     } else {
-      // produto que já existe: PUT, com o id na URL
-      await fetch(API + "/" + idEditando, {
+      await fetch(API_URL + "/" + idEditando, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(produto),
+        body: JSON.stringify({
+          nome: nomeProduto,
+          valor: valorProduto,
+          descricao: descricaoProduto,
+          tipo: tipoProduto,
+        }),
       });
-    }
 
-    setNome("");
-    setValor("");
-    setDescricao("");
-    setTipo("");
-    setIdEditando(0);
-    buscar();
+      setIdEditando(0);
+    }
+    setNomeProduto("");
+    setDescricaoProduto("");
+    setValorProduto("");
+    setTipoProduto("");
+
+    buscarProdutos();
   }
 
   async function excluir(id) {
-    await fetch(API + "/" + id, { method: "DELETE" });
-    buscar();
+    await fetch(`${API_URL}/${id}`, {
+      method: "DELETE",
+    });
+    buscarProdutos();
   }
 
-  function editar(item) {
+  async function editar(item) {
     setIdEditando(item.id);
-    setNome(item.nome);
-    setValor(String(item.valor));
-    setDescricao(item.descricao);
-    setTipo(item.tipo);
+    setNomeProduto(item.nome);
+    setDescricaoProduto(item.descricao);
+    setValorProduto(item.valor);
+    setTipoProduto(item.tipo);
   }
 
   useEffect(() => {
-    buscar();
+    buscarProdutos();
   }, []);
 
   return (
@@ -81,31 +88,31 @@ export default function Hamburgueria() {
 
       <TextInput
         style={styles.campo}
-        value={nome}
-        onChangeText={setNome}
-        placeholder="Nome"
+        value={nomeProduto}
+        onChangeText={setNomeProduto}
+        placeholder="Nome do produto"
       />
       <TextInput
         style={styles.campo}
-        value={valor}
-        onChangeText={setValor}
-        placeholder="Valor"
+        value={valorProduto}
+        onChangeText={setValorProduto}
         keyboardType="numeric"
+        placeholder="Valor do produto"
       />
       <TextInput
         style={styles.campo}
-        value={descricao}
-        onChangeText={setDescricao}
-        placeholder="Descrição"
+        value={descricaoProduto}
+        onChangeText={setDescricaoProduto}
+        placeholder="Descrição do produto"
       />
       <TextInput
         style={styles.campo}
-        value={tipo}
-        onChangeText={setTipo}
-        placeholder="Tipo"
+        value={tipoProduto}
+        onChangeText={setTipoProduto}
+        placeholder="Tipo do produto"
       />
 
-      <Button title="Salvar" onPress={salvar} />
+      <Button title="Salvar produto" onPress={salvarProduto} />
 
       <FlatList
         style={styles.lista}
@@ -115,8 +122,8 @@ export default function Hamburgueria() {
             <Text style={styles.item}>
               {item.id} - {item.nome} - {item.descricao}
             </Text>
-            <Button title="Editar" onPress={() => editar(item)} />
             <Button title="Excluir" onPress={() => excluir(item.id)} />
+            <Button title="Editar" onPress={() => editar(item)} />
           </View>
         )}
       />
