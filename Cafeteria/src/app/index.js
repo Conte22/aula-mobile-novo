@@ -1,3 +1,4 @@
+
 import { Link, Stack } from "expo-router";
 import { StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -5,20 +6,22 @@ import { SafeAreaView } from "react-native-safe-area-context";
 export default function Inicio() {
   return (
     <SafeAreaView style={styles.tela} edges={["bottom"]}>
-      <Stack.Screen options={{ title: "Qualquer outra coisa" }} />
+      <Stack.Screen options={{ title: "Cafeteria" }} />
 
       <View style={styles.cabecalho}>
         <View style={styles.avatar} />
         <View>
           <Text style={styles.saudacao}>Olá, Estudante</Text>
-          <Text style={styles.subtitulo}>Bem-vindo de volta</Text>
+          <Text style={styles.subtitulo}>Bem-vindo à Cafeteria</Text>
         </View>
       </View>
-      
+
       <View style={styles.cartao}>
-        <Text style={styles.cartaoTitulo}>Hamburgueria na nuvem</Text>
-        <Text style={styles.detalhe}>Listar e salvar no MockAPI</Text>
-        <Link href="/hamburgueria" style={styles.link}>
+        <Text style={styles.cartaoTitulo}>Cafeteria na nuvem</Text>
+        <Text style={styles.detalhe}>
+          Listar e salvar produtos no MockAPI
+        </Text>
+        <Link href="/cafeteria" style={styles.link}>
           Abrir →
         </Link>
       </View>
