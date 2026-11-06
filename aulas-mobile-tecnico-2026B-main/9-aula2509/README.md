@@ -24,4 +24,7 @@ tarefa continua lá. `/lista` some ao fechar.
   aula 8.
 - `keyExtractor` usa o `id` que o banco gerou.
 
-Editar e excluir ficam para as próximas aulas.
+- `DELETE ... WHERE id = ?` exclui só a linha daquele `id`. Depois, `carregar()`
+  de novo.
+
+Editar fica para a próxima aula.

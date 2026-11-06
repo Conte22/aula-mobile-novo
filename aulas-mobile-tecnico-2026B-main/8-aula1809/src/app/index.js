@@ -51,7 +51,7 @@ export default function Inicio() {
       <View style={styles.cartao}>
         <Text style={styles.cartaoTitulo}>Lista</Text>
         <Text style={styles.detalhe}>Qualquer coisa.</Text>
-        <Link href="/lista" style={styles.link}>
+        <Link href="/lista-db" style={styles.link}>
           Abrir lista →
         </Link>
       </View>

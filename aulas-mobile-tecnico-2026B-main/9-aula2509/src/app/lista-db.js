@@ -1,6 +1,13 @@
 import { Stack } from "expo-router";
 import { useEffect, useState } from "react";
-import { Button, FlatList, StyleSheet, Text, TextInput } from "react-native";
+import {
+  Button,
+  FlatList,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as SQLite from "expo-sqlite";
 
@@ -23,6 +30,10 @@ function adicionar(texto) {
   db.runSync("INSERT INTO tarefas (texto) VALUES (?)", [texto]);
 }
 
+function excluir(id) {
+  db.runSync("DELETE FROM tarefas WHERE id = ?", [id]);
+}
+
 export default function ListaDb() {
   const [texto, setTexto] = useState("");
   const [lista, setLista] = useState([]);
@@ -38,6 +49,11 @@ export default function ListaDb() {
   function salvar() {
     adicionar(texto);
     setTexto("");
+    carregar();
+  }
+
+  function remover(id) {
+    excluir(id);
     carregar();
   }
 
@@ -57,7 +73,12 @@ export default function ListaDb() {
         style={styles.lista}
         data={lista}
         keyExtractor={(item) => String(item.id)}
-        renderItem={({ item }) => <Text style={styles.item}>{item.texto}</Text>}
+        renderItem={({ item }) => (
+          <View style={styles.item}>
+            <Text style={styles.itemTexto}>{item.texto}</Text>
+            <Button title="Excluir" onPress={() => remover(item.id)} />
+          </View>
+        )}
       />
     </SafeAreaView>
   );
@@ -91,6 +112,14 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 16,
     marginBottom: 8,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 12,
+  },
+
+  itemTexto: {
+    flex: 1,
     fontSize: 15,
     color: "#111827",
   },
