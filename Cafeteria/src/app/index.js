@@ -14,23 +14,7 @@ export default function Inicio() {
           <Text style={styles.subtitulo}>Bem-vindo de volta</Text>
         </View>
       </View>
-
-      <View style={styles.cartao}>
-        <Text style={styles.cartaoTitulo}>Bordeis</Text>
-        <Text style={styles.detalhe}>...</Text>
-        <Link href="/bordel" style={styles.link}>
-          Ver meus bordeis →
-        </Link>
-      </View>
-
-      <View style={styles.cartao}>
-        <Text style={styles.cartaoTitulo}>CEP</Text>
-        <Text style={styles.detalhe}>Endereço direto da ViaCEP</Text>
-        <Link href="/cep" style={styles.link}>
-          Buscar um CEP →
-        </Link>
-      </View>
-
+      
       <View style={styles.cartao}>
         <Text style={styles.cartaoTitulo}>Hamburgueria na nuvem</Text>
         <Text style={styles.detalhe}>Listar e salvar no MockAPI</Text>
