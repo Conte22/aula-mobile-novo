@@ -7,6 +7,7 @@ import {
   Button,
   FlatList,
   TextInput,
+  TouchableOpacity,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Stack } from "expo-router";
@@ -114,14 +115,17 @@ export default function Cafeteria() {
         placeholder="Tipo do produto"
       />
 
-      <Button title="Salvar produto" onPress={salvarProduto} />
+      <Button
+        title={idEditando === 0 ? "Salvar produto" : "Atualizar produto"}
+        onPress={salvarProduto}
+      />
 
       <FlatList
         style={styles.lista}
         data={produtos}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-          <View>
+          <View style={styles.card}>
             <Text style={styles.item}>
               {item.id} - {item.nome}
               {"\n"}Valor: R$ {item.valor}
@@ -129,8 +133,15 @@ export default function Cafeteria() {
               {"\n"}Tipo: {item.tipo}
             </Text>
 
-            <Button title="Editar" onPress={() => editar(item)} />
-            <Button title="Excluir" onPress={() => excluir(item.id)} />
+            <View style={styles.botoes}>
+              <TouchableOpacity onPress={() => editar(item)}>
+                <Text style={styles.botao}>✍️</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={() => excluir(item.id)}>
+                <Text style={styles.botao}>🗑️</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         )}
       />
@@ -167,12 +178,28 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
 
+  card: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 10,
+  },
+
   item: {
+    flex: 1,
     backgroundColor: "#F1F3F6",
     borderRadius: 12,
     padding: 16,
-    marginBottom: 8,
     fontSize: 15,
     color: "#111827",
+  },
+
+  botoes: {
+    justifyContent: "center",
+    gap: 12,
+    paddingHorizontal: 12,
+  },
+
+  botao: {
+    fontSize: 24,
   },
 });
