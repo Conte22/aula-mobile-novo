@@ -11,7 +11,7 @@ export default function Inicio() {
       <View style={styles.cabecalho}>
         <View style={styles.avatar} />
         <View>
-          <Text style={styles.saudacao}>Olá, Estudante</Text>
+          <Text style={styles.saudacao}>Olá, Usuário</Text>
           <Text style={styles.subtitulo}>Bem-vindo à Cafeteria</Text>
         </View>
       </View>
@@ -19,7 +19,7 @@ export default function Inicio() {
       <View style={styles.cartao}>
         <Text style={styles.cartaoTitulo}>Cafeteria na nuvem</Text>
         <Text style={styles.detalhe}>
-          Listar e salvar produtos no MockAPI
+          Listar e salvar produtos
         </Text>
         <Link href="/cafeteria" style={styles.link}>
           Abrir →
