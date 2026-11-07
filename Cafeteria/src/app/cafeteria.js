@@ -20,6 +20,7 @@ export default function Cafeteria() {
   const [valorProduto, setValorProduto] = useState("");
   const [descricaoProduto, setDescricaoProduto] = useState("");
   const [tipoProduto, setTipoProduto] = useState("");
+  const [tamanhoProduto, setTamanhoProduto] = useState("");
   const [idEditando, setIdEditando] = useState(0);
 
   async function buscarProdutos() {
@@ -34,6 +35,7 @@ export default function Cafeteria() {
       valor: Number(valorProduto),
       descricao: descricaoProduto,
       tipo: tipoProduto,
+      tamanho: tamanhoProduto,
     };
 
     if (idEditando === 0) {
@@ -56,6 +58,7 @@ export default function Cafeteria() {
     setDescricaoProduto("");
     setValorProduto("");
     setTipoProduto("");
+    setTamanhoProduto("");
 
     buscarProdutos();
   }
@@ -74,6 +77,7 @@ export default function Cafeteria() {
     setDescricaoProduto(item.descricao);
     setValorProduto(String(item.valor));
     setTipoProduto(item.tipo);
+    setTamanhoProduto(item.tamanho || "");
   }
 
   useEffect(() => {
@@ -115,6 +119,13 @@ export default function Cafeteria() {
         placeholder="Tipo do produto"
       />
 
+      <TextInput
+        style={styles.campo}
+        value={tamanhoProduto}
+        onChangeText={setTamanhoProduto}
+        placeholder="Tamanho (Pequeno, Médio ou Grande)"
+      />
+
       <Button
         title={idEditando === 0 ? "Salvar produto" : "Atualizar produto"}
         onPress={salvarProduto}
@@ -131,6 +142,7 @@ export default function Cafeteria() {
               {"\n"}Valor: R$ {item.valor}
               {"\n"}Descrição: {item.descricao}
               {"\n"}Tipo: {item.tipo}
+              {"\n"}Tamanho: {item.tamanho}
             </Text>
 
             <View style={styles.botoes}>
